@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/PersonSearch.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/web/content.jsp</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/Validator.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/DeleteUserServlet.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/PersonDBA.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/web/about.html</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/web/updatePerson.jsp</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/ListUsers.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/web/addPerson.jsp</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/web/logout.jsp</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/web/register.jsp</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/LoginServlet.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/User.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/ListInitializer.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/UpdatePersonServlet.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/RegisterServlet.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/Person.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/web/login.jsp</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/web/deleteUser.jsp</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/web/display.jsp</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/src/java/edu/acc/capstone/addressbookDBA/WorkServlet.java</file>
+            <file>file:/C:/Users/Rayo/Documents/NetBeansProjects/addressbookDBA/web/WEB-INF/web.xml</file>
+        </group>
+    </open-files>
+</project-private>
