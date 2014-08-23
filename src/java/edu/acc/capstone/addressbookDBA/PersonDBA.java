@@ -70,7 +70,6 @@ public class PersonDBA {
             Connection conn = DriverManager.getConnection(connectionURL, "leo", "leo");
             String sql = "DELETE FROM LEO." + user.getUserName() +" WHERE FIRSTNAME =?";
             PreparedStatement st = conn.prepareStatement( sql ); 
-            //st.setString(1, user.getUserName());
             st.setString(1, person.getFirstName());
             st.executeUpdate(); 
             st.close(); 

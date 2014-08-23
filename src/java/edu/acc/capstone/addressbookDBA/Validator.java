@@ -14,11 +14,11 @@ public class Validator {
     //checks to see if the user is in registered list
     public boolean validate( User user, ListUsers listOfUsers ) {
         ArrayList<User> userList = listOfUsers.getUserList();
-        
+        //checks to see if the list is empty
         if( userList == null) {
                    return false;
         }
-        
+        //if its not empty search for the user
         Iterator<User> itr = userList.iterator();
             while ( itr.hasNext() ) {
                 User element = itr.next();

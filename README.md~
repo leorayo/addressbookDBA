@@ -3,7 +3,7 @@ addressbook
 
 					Personal Address Book 
 
-It's an application that lets the user save a personss information. They can save the persons first name, last name, address, email address, 
+It's an application that lets the user save a persons information. They can save the persons first name, last name, address, email address, 
 phone number, birthday, and any special notes they want to save about the person. There are no restrictions on the input fields. You can
 input the information in whatever format you want. The way you input the information is the way it gets saved and displayed.
 
@@ -129,6 +129,7 @@ got the page to look how I wanted. I know that the css file goes outside of your
 jsp page code for now.
 
 7/11/2014
+
 I added an about link to the page. I also added warning errors to the login parameters, you have to enter a username and password if not you wil
 l not be able to login. I also added a check box that the user can check and press submit and that gives the user a chance to go to the register page
 if they already have an account.
@@ -138,6 +139,7 @@ ListUsers.java
 
 I created a new package called edu.acc.capstone.addressbook where all my source code will be saved in. I created a new class called ListUsers.java that
 will create a new list of users object that I will use to track the users that will be registered. It will also have a method to add and delete a user. 
+
 User.java
 7/5/2014
 
@@ -155,6 +157,7 @@ I created a java class called Validator.java. This class will be in charge of au
 user is registered/found the method will be return the found user. It receives a username, password and the list of users as parameters.
 
 7/11/2014
+
 I kept on getting a nullpointer exception after I logged out and tried to login again. After debugging my program I found out that when I found a valid user
 I was not returning it right away instead it weas being overwritten with a false valued. I fixed this by returning the Boolean value as soon as the function
 ValidateUser() found it.
@@ -178,6 +181,7 @@ registered it will get the current session from the login jsp and send them to t
 send them to a RegisterServlet.java that will handle the request.
 
 7/10/2014
+
 I added if statements to check the parameters form the login.jsp form. If the parameters are empty the user will get an error message in the login.jsp page. If
 they are not empty the user will be able to proceed with their request.
 
@@ -202,14 +206,17 @@ RegisterServlet.java
 I created a RegisterServlet.java class that for now doesn’t do anything I just want to see if I manage to get redirect to this servlet by the LoginServlet.java.
 
 7/9/2014
+
 I added a call to get the current session from the login.jsp page. I called ListUsers.java to get the list of registered users. I registered the user and allowed 
 them into the content/home page.
 
 7/10/2014
+
 I added an if statement to see if the username that the user selects is already registered or not. If it is registered I redirect them back to the register page
 with an error. If the user is not registered I add them to the register list and allow them in.
 
 7/11/2014
+
 To fix the nullpointer exception I got the list of users from the context scope instead of calling UserList.java to get a list of users.
 
 Content.jsp
@@ -219,6 +226,7 @@ I created a new jsp page called content. Jsp. This page is a css/html template t
 three check boxes for the search option, add person option, and delete person option. It also has a submit button. This form submits to WorkServlet.java.
 
 7/11/2014
+
 I removed the checkboxes options from the page, and instead I added radio buttons. With radio buttons the user can only choose one option. I also added a fourth
 choice to update a person. This page will also have a link so the user can delete their account. I also added a line of code to display the name and the number of
 persons the user has saved in their addressbook.
@@ -231,9 +239,11 @@ lastname and it will look for the person.  If the person is found it can be dele
 the user wants to add a person they will be send to addPerson.jsp to input the persons information.
 
 7/10/2014
+
 I added error messages to the content.jsp page. When the user does not select an option from the check boxes they will get an error message in the content.jsp page. 
 
 7/11/2014
+
 I also modified this servlet to handle the users request to modify a person. It searches for the person and if the person is found the user will be send to the 
 updatePerson.jsp page. If the person is not found, the user will get an error message in the content.jsp page.
 
@@ -300,6 +310,7 @@ I compiled and ran the addressbook application. I had to tweak some of the login
 password I was redirected to the register page. This is what I wanted to happen because the user is not yet registered.
 
 7/10/2014
+
 I recompiled and ran the web application. The login page displays fine, but I realize that I need to put some error messages in case the user doesn’t input a username
 and/or password. I need this error messages in the login.jsp, and in the register.jsp page. I also need a message to tell the user that they are not registered and to
 please register for an account.  I need to add an option for the user to go to the register page if they are not registered yet, and I also need to add a link 
@@ -311,6 +322,7 @@ WorkServlet.java I was able to get all the users person information to display i
 again with a valid username and password I get a nullpointer exception. I also get the same error message if I try to register for a new account. 
 
 7/11/2014
+
 I added a context listener to my web application that is in charge of calling UserList.java to get a list object that it then set to the context scope. This addition
 fixed my nullpointer exception because now I have a single list of users that I am working with throughout my application. Before getting this list from the context 
 scope I was getting a brand new list every time I called UserList.java. This is what was causing the nullpointer exception because a user or person was getting recorded,
@@ -319,13 +331,15 @@ person list. I added a way for the user to delete their account and I also added
 their addressbook. I also added a notes attribute to the Person.java java bean.
 
 7/14/2014
+
 I added more documentation to my web pages and to my java classes. I still have the problem with the css code embedded in the jsp/html code.  I still have to 
 find a way to get the css out in a separate file. 
 
 7/19/2014
-I searched online for a solution on how to fix the css problem that I have been finding and I didn’t find a obvious solution. I suspected that my problem was 
+
+I searched online for a solution on how to fix the css problem that I have been having and I didn’t find an obvious solution. I suspected that my problem was 
 with the href path that I was putting in my .jsp pages but that was not correct. The problem was in the css file itself I was missing a directory so my pictures
-were not getting loaded properly. I fixed the problem and now all my css is in its own file separate from the jsp/html code.
+were not getting loaded properly. I fixed the problem and now all my css are in their own files, separate from the jsp/html code.
 
 
 

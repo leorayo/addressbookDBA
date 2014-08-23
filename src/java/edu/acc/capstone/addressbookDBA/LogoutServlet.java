@@ -1,9 +1,6 @@
 /**
- * This servlet will be in charge of handling the parameters from the homepage.
- * If the user has a previous account the servlet will call the validate method
- * to make sure the username and password are correct. If the username or
- * password is incorrect the user will be send to a register page.  If the
- * username and password are correct the user will be send to the home/content page.
+ * This servlet is in charge of ending a users session and login them out of the 
+ * web application. The user gets redirected to the login page.
  */
 package edu.acc.capstone.addressbookDBA;
 /**
@@ -23,8 +20,10 @@ public class LogoutServlet extends HttpServlet {
         
         //get the users current session
         HttpSession session = request.getSession();
+        //invalidates the users session
         session.invalidate();
+        //sends the user to the login page
         response.sendRedirect( "login.jsp ");
-        //request.getRequestDispatcher( "login.jsp" ).forward( request, response );    
+            
     }
 }

@@ -62,14 +62,16 @@ public class DeleteUserServlet extends HttpServlet {
             
             if ( check == true && currentUser.getUserName().equals( userName ) && currentUser.getPassword().equals( password ) ) {
                 user = validate.getCurrentUser(); 
+                //delete user form the list
                 listOfUsers.deleteUser( user );
+                //delete the user form the database
                 listOfUsers = listinit.deleteUserDBA( user );
                 context.setAttribute( "listOfUsers", listOfUsers );
                 request.setAttribute( "deletedUser", "Your account was deleted" );
                 request.getRequestDispatcher( "login.jsp" ).forward( request, response );
                 return;
             }
-            //if the user doesnt have the right username and password dont delete the account
+            //if the user doesnt input the right username and password dont delete the account
             else {
                 request.setAttribute( "invalid", "This is not your account!" );
                 request.getRequestDispatcher( "deleteUser.jsp" ).forward( request, response );

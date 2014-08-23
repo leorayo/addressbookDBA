@@ -51,7 +51,9 @@ public class UpdatePersonServlet extends HttpServlet {
         person.setBirthday( birthday );
         person.setNotes( notes );
         PersonDBA persondba = new PersonDBA();
+        //update the persons information in the database
         persondba.updatePersonDBA( user, person );
+        //gets the list of persons from the database
         user.setUserPersonList( persondba.getPersonListDBA( user ));
         request.setAttribute( "add", firstName + lastName + " updated." );
         session.setAttribute( "user", user );

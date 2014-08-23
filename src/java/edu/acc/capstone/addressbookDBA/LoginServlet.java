@@ -72,7 +72,8 @@ public class LoginServlet extends HttpServlet {
             //if the user is registered allow them in to the content page
             if ( check == true ) {
                 user = validate.getCurrentUser(); 
-                HttpSession session = request.getSession();  
+                HttpSession session = request.getSession();
+                //retrieve the list of persons from the users person database table
                 user.setUserPersonList( persondba.getPersonListDBA( user ));
                 context.setAttribute( "listOfUsers", listOfUsers );
                 session.setAttribute( "user", user );

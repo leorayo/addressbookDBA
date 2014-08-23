@@ -1,9 +1,10 @@
 /**
- * The servlet will make sure that the user does not choose a user name that is
- * already registered. If the username is already registered the user will be
- * send back to the register page with an error message. If the username is not
- * registered the user will be added to the registered list and to the user database table, 
- * and the user will be allowed to enter the content/home page.
+ * This servlet will register a new user. The servlet will make sure that the 
+ * user does not choose a user name that is already registered. If the username
+ * is already registered the user will be send back to the register page with an
+ * error message. If the username is not registered the user will be added to
+ * the registered list and to the user database table, and the user will be 
+ * allowed to enter the content/home page.
  */
 package edu.acc.capstone.addressbookDBA;
 /**
@@ -73,7 +74,9 @@ public class RegisterServlet extends HttpServlet {
             else { 
                 //ListInitializer listinit = new ListInitializer();
               //  listOfUsers.updateUserList( user );
+                //create a users person database table
                 persondba.createPersonDBA( user );
+                //add the user to the users database table
                 listOfUsers = listinit.AddUserDBA( user );
                 context.setAttribute( "list", listOfUsers);
                 session.setAttribute( "user", user );

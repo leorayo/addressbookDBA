@@ -24,7 +24,7 @@ public class ListInitializer implements ServletContextListener {
     
     @Override
     public void contextInitialized( ServletContextEvent sce ) {
-        //instantiate a list and attach it to the context scope
+        //instantiate a servletcontext object
         ServletContext ctx = sce.getServletContext();
         //conect to the database to get the current list of users  
         try {
@@ -50,7 +50,7 @@ public class ListInitializer implements ServletContextListener {
         if ( conn != null )
             try { conn.close(); } catch ( SQLException sqle ) {}
     }
-    
+    //makes a user bean to be used in the database methods
     private User makeUserBean( String userName, String password ) {
         User user = new User();
         user.setUserName( userName );

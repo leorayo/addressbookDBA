@@ -54,14 +54,16 @@ public class WorkServlet extends HttpServlet {
         String phoneNumber = request.getParameter( "phoneNumber" );
         String birthday = request.getParameter( "birthday" );
         String notes = request.getParameter( "notes" );
-        //gets the user from the context attribute
+        
        // Person person = new Person();
+        
+        //gets the user from the context attribute
         User user = (User)request.getSession().getAttribute( "user" );
         PersonDBA persondba = new PersonDBA();
         
         //user.setUserPersonList( persondba.getPersonListDBA() );
         
-        //if the user chose search search for the person and display their information in the display jsp page    
+        //if the user chose "search" search for the person and display their information in the display jsp page    
         if ( search != null ) {
            Person person = new Person();
            PersonSearch myPerson = new PersonSearch();    
@@ -90,7 +92,9 @@ public class WorkServlet extends HttpServlet {
                 return;
            }
            else {
+               //delete the person from the list
                 user.deletePerson( person );
+                //delete the person from the database
                 persondba.deletePersonDBA( user, person );
                 //user.setUserPersonList( persondba.getPersonListDBA() );
                 request.setAttribute( "deleted", firstName + " " + lastName+ " was deleted." );
@@ -135,7 +139,9 @@ public class WorkServlet extends HttpServlet {
         addPerson.setPhoneNumber( phoneNumber );
         addPerson.setBirthday( birthday );
         addPerson.setNotes( notes );
+        //add the person to the list
         user.setPersonList( addPerson );
+        //add the person to the database
         persondba.addPersonDBA( user, addPerson );
         request.setAttribute( "add", firstName + lastName + " was added." );
         session.setAttribute( "user", user );
