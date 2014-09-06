@@ -1,7 +1,8 @@
 /**
  * This page will find the person that the user wants to update and send them
  * to an update person page. If the person is not found, the user will get an
- * error message.
+ * error message. This servlet also access the PERONS database table and is able
+ * to update a specific row. 
  */
 package edu.acc.capstone.addressbookDBA;
 /**
@@ -28,7 +29,6 @@ public class UpdatePersonServlet extends HttpServlet {
         String phoneNumber = request.getParameter( "phoneNumber" );
         String birthday = request.getParameter( "birthday" );
         String notes = request.getParameter( "notes" );
-        
         User user = (User)request.getSession().getAttribute( "user" );
         
         //try to find the person in the user object list     
@@ -39,7 +39,7 @@ public class UpdatePersonServlet extends HttpServlet {
            if ( person == null ) {
                 request.setAttribute( "notFound", firstName + " " + lastName + " is not in your addressbook." );
                 session.setAttribute( "user", user );
-                request.getRequestDispatcher( "content.jsp" ).forward( request, response );
+                request.getRequestDispatcher( "/WEB-INF/content.jsp" ).forward( request, response );
                 return;
            }
         //if the person is found update their information from the list and database table
@@ -58,7 +58,7 @@ public class UpdatePersonServlet extends HttpServlet {
         request.setAttribute( "add", firstName + lastName + " updated." );
         session.setAttribute( "user", user );
         session.setAttribute( "person", person );
-        request.getRequestDispatcher( "display.jsp" ).forward( request, response );
+        request.getRequestDispatcher( "/WEB-INF/display.jsp" ).forward( request, response );
               
     }
 }

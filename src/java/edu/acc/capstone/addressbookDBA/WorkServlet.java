@@ -7,7 +7,8 @@
  * person page if the user selects to add a person. This servlet will also 
  * handle adding that person by getting the parameters from the add person page.
  * If the user wants to delete a person or update a person the servlet will send
- * them to another servlet to deal with the request.  
+ * them to another servlet to deal with the request. This servlet also access the 
+ * PERSONS database table to manipulate the rows.
  */
 package edu.acc.capstone.addressbookDBA;
 /**
@@ -21,6 +22,14 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 public class WorkServlet extends HttpServlet {
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//HttpSession session = request.getSession();
+        //String add = (String)session.getAttribute( "add" );
+        //request.setAttribute( "add", add );	
+        request.getRequestDispatcher( "/WEB-INF/content.jsp" ).forward(request,response);
+    }
+    
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -45,7 +54,7 @@ public class WorkServlet extends HttpServlet {
             request.setAttribute( "firstName", firstName );
             request.setAttribute( "lastName", lastName );
             request.setAttribute( "chooseOption", "You must choose of one these options!" );
-            request.getRequestDispatcher( "content.jsp" ).forward( request, response );
+            request.getRequestDispatcher( "/WEB-INF/content.jsp" ).forward( request, response );
             return;
         }
         
@@ -55,27 +64,23 @@ public class WorkServlet extends HttpServlet {
         String birthday = request.getParameter( "birthday" );
         String notes = request.getParameter( "notes" );
         
-       // Person person = new Person();
-        
         //gets the user from the context attribute
         User user = (User)request.getSession().getAttribute( "user" );
-        PersonDBA persondba = new PersonDBA();
+        PersonDBA persondba = new PersonDBA();     
         
-        //user.setUserPersonList( persondba.getPersonListDBA() );
-        
-        //if the user chose "search" search for the person and display their information in the display jsp page    
+        //if the user chose "search" search for the person and display their information in the display.jsp page    
         if ( search != null ) {
            Person person = new Person();
            PersonSearch myPerson = new PersonSearch();    
            person = myPerson.search( firstName, lastName, user );
            if ( person == null ) {
                request.setAttribute( "notFound", firstName + " "+ lastName + " is not in your addressbook" );
-               request.getRequestDispatcher( "content.jsp" ).forward( request, response );
+               request.getRequestDispatcher( "/WEB-INF/content.jsp" ).forward( request, response );
                return;
            }
            else {
            session.setAttribute( "person", person );
-           request.getRequestDispatcher( "display.jsp" ).forward( request, response );
+           request.getRequestDispatcher( "/WEB-INF/display.jsp" ).forward( request, response );
            return;
            }
            
@@ -88,7 +93,7 @@ public class WorkServlet extends HttpServlet {
            if ( person == null ) {
                 request.setAttribute( "notFound", firstName + " " + lastName + " is not in your addressbook." );
                 session.setAttribute( "user", user );
-                request.getRequestDispatcher( "content.jsp" ).forward( request, response );
+                request.getRequestDispatcher( "/WEB-INF/content.jsp" ).forward( request, response );
                 return;
            }
            else {
@@ -99,16 +104,16 @@ public class WorkServlet extends HttpServlet {
                 //user.setUserPersonList( persondba.getPersonListDBA() );
                 request.setAttribute( "deleted", firstName + " " + lastName+ " was deleted." );
                 session.setAttribute( "user", user );
-                request.getRequestDispatcher( "content.jsp" ).forward( request, response );
+                request.getRequestDispatcher( "/WEB-INF/content.jsp" ).forward( request, response );
                 return;
            }
         }
-        //if the user chose add send them to the addPerson jsp page to get the persons information
+        //if the user chose add send them to the addPerson.jsp page to get the persons information
         else if ( add != null ) {
             request.setAttribute( "personFirstName", firstName );
             request.setAttribute( "personLastName", lastName );
             session.setAttribute( "user", user );
-            request.getRequestDispatcher( "addPerson.jsp" ).forward( request, response );
+            request.getRequestDispatcher( "/WEB-INF/addPerson.jsp" ).forward( request, response );
             return;
         }
         //if the user chose update make sure the person is in the users person list and update the person
@@ -120,13 +125,13 @@ public class WorkServlet extends HttpServlet {
                 request.setAttribute( "notFound", firstName + " " + lastName + " is not in your addressbook." );
                 session.setAttribute( "person", person);
                 session.setAttribute( "user", user );
-                request.getRequestDispatcher( "content.jsp" ).forward( request, response );
+                request.getRequestDispatcher( "/WEB-INF/content.jsp" ).forward( request, response );
                 return;
            }
            else {
                 session.setAttribute( "user", user );
                 session.setAttribute( "person", person);
-                request.getRequestDispatcher( "updatePerson.jsp" ).forward( request, response );
+                request.getRequestDispatcher( "/WEB-INF/updatePerson.jsp" ).forward( request, response );
                 return;
            }
         }
@@ -143,10 +148,11 @@ public class WorkServlet extends HttpServlet {
         user.setPersonList( addPerson );
         //add the person to the database
         persondba.addPersonDBA( user, addPerson );
-        request.setAttribute( "add", firstName + lastName + " was added." );
+        user.setUserPersonList( persondba.getPersonListDBA( user ));
+        session.setAttribute( "add", firstName + lastName + " was added." );
         session.setAttribute( "user", user );
         session.setAttribute( "person", addPerson );
-        request.getRequestDispatcher( "display.jsp" ).forward( request, response );
+        request.getRequestDispatcher( "/WEB-INF/display.jsp" ).forward( request, response );
               
     }
 }

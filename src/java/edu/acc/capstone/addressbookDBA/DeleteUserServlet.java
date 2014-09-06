@@ -16,6 +16,12 @@ import javax.servlet.http.HttpSession;
 
 
 public class DeleteUserServlet extends HttpServlet {
+    //this method manages the redirecting of the user to the deleteUser.jsp page
+    @Override
+     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher( "/WEB-INF/deleteUser.jsp" ).forward(request,response);
+    }
+    //this method handles the work to be done for this servlet
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,18 +34,18 @@ public class DeleteUserServlet extends HttpServlet {
         if( password.equals( "" ) && userName.equals( "" ) ) {
             request.setAttribute( "noUserName", "You must enter a username!" );
             request.setAttribute( "noPassword", "You must enter a password!" );
-            request.getRequestDispatcher( "deleteUser.jsp" ).forward( request, response );
+            request.getRequestDispatcher( "/WEB-INF/deleteUser.jsp" ).forward( request, response );
             return;
         }  
         if( userName.equals( "" ) )  {         
             request.setAttribute( "noUserName", "You must enter a username!" );
-            request.getRequestDispatcher( "deleteUser.jsp" ).forward( request, response );
+            request.getRequestDispatcher( "/WEB-INF/deleteUser.jsp" ).forward( request, response );
             return;
         }   
         if( password.equals( "" ) ) {
             request.setAttribute( "noPassword", "You must enter a password!" );
             request.setAttribute( "userName", userName );
-            request.getRequestDispatcher( "deleteUser.jsp" ).forward( request, response );
+            request.getRequestDispatcher( "/WEB-INF/deleteUser.jsp" ).forward( request, response );
             return;
         }
        
@@ -66,15 +72,18 @@ public class DeleteUserServlet extends HttpServlet {
                 listOfUsers.deleteUser( user );
                 //delete the user form the database
                 listOfUsers = listinit.deleteUserDBA( user );
+                //end the user session
+                HttpSession session = request.getSession();
+                session.invalidate();
                 context.setAttribute( "listOfUsers", listOfUsers );
                 request.setAttribute( "deletedUser", "Your account was deleted" );
-                request.getRequestDispatcher( "login.jsp" ).forward( request, response );
+                request.getRequestDispatcher( "/WEB-INF/login.jsp" ).forward( request, response );
                 return;
             }
             //if the user doesnt input the right username and password dont delete the account
             else {
                 request.setAttribute( "invalid", "This is not your account!" );
-                request.getRequestDispatcher( "deleteUser.jsp" ).forward( request, response );
+                request.getRequestDispatcher( "/WEB-INF/deleteUser.jsp" ).forward( request, response );
                 return;
             }                 
         }

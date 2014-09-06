@@ -4,6 +4,7 @@
  * to make sure the username and password are correct. If the username or
  * password is incorrect the user will be send to a register page.  If the
  * username and password are correct the user will be send to the home/content page.
+ * This servlet gets the list of users from the USERS database table.
  */
 package edu.acc.capstone.addressbookDBA;
 /**
@@ -30,22 +31,22 @@ public class LoginServlet extends HttpServlet {
         if( register == null && password.equals( "" ) && userName.equals( "" ) ) {
             request.setAttribute( "noUserName", "You must enter a username!" );
             request.setAttribute( "noPassword", "You must enter a password!" );
-            request.getRequestDispatcher( "login.jsp" ).forward( request, response );
+            request.getRequestDispatcher( "/WEB-INF/login.jsp" ).forward( request, response );
             return;
         } 
         if ( register != null && password.equals( "" ) && password.equals( "" ) ) {
-            request.getRequestDispatcher( "register.jsp" ).forward( request, response );
+            request.getRequestDispatcher( "/WEB-INF/register.jsp" ).forward( request, response );
             return;
         } 
         if( userName.equals( "" ) )  {         
             request.setAttribute( "noUserName", "You must enter a username!" );
-            request.getRequestDispatcher( "login.jsp" ).forward( request, response );
+            request.getRequestDispatcher( "/WEB-INF/login.jsp" ).forward( request, response );
             return;
         }   
         if( password.equals( "" ) ) {
             request.setAttribute( "noPassword", "You must enter a password!" );
             request.setAttribute( "userName", userName );
-            request.getRequestDispatcher( "login.jsp" ).forward( request, response );
+            request.getRequestDispatcher( "/WEB-INF/login.jsp" ).forward( request, response );
             return;
         }
        
@@ -54,17 +55,13 @@ public class LoginServlet extends HttpServlet {
             User user = new User();
             user.setUserName( userName );
             user.setPassword( password );
-            String admin = "administrator";
-            String adminpass = "leorayo";
+            //create a new PersonDBA object
             PersonDBA persondba = new PersonDBA();
-            if( userName.equals( admin ) && password.equals( adminpass ) && user.getPersonList() == null ) {
-                persondba.createPersonDBA( user );
-            }
             
             //get the user list from the context attribute
             ServletContext context = request.getServletContext();
             ListUsers listOfUsers = (ListUsers)context.getAttribute( "listOfUsers" );
-            //get the current list of registered users from the database
+            //get the current list of registered users from the USERS database table
             listOfUsers = listinit.getListOfUsers();
             //make sure the user is registered
             Validator validate = new Validator();
@@ -73,17 +70,17 @@ public class LoginServlet extends HttpServlet {
             if ( check == true ) {
                 user = validate.getCurrentUser(); 
                 HttpSession session = request.getSession();
-                //retrieve the list of persons from the users person database table
+                //retrieve the list of persons from the PERSONS database table
                 user.setUserPersonList( persondba.getPersonListDBA( user ));
                 context.setAttribute( "listOfUsers", listOfUsers );
                 session.setAttribute( "user", user );
-                request.getRequestDispatcher( "content.jsp" ).forward( request, response );
+                request.getRequestDispatcher( "/WEB-INF/content.jsp" ).forward( request, response );
                 return;
             }
             //if the user is not registered send them to a register page
             else {
                 request.setAttribute( "invalid", "Access denied, you are not registered." );
-                request.getRequestDispatcher( "register.jsp" ).forward( request, response );
+                request.getRequestDispatcher( "/WEB-INF/register.jsp" ).forward( request, response );
                 return;
             }                 
         }

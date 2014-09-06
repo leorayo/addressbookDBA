@@ -8,9 +8,10 @@ package edu.acc.capstone.addressbookDBA;
 import java.util.*;
         
 public class PersonSearch {
-    private Person person;
+   
     //get the users person list and check to see if the desired person is in their list
     public Person search( String firstName, String lastName, User user) {
+       Person person = null; 
        ArrayList<Person> personList = user.getPersonList();
        //if the list is empty return null
        if( personList == null) {

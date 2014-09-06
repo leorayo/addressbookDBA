@@ -1,9 +1,8 @@
 /*
- * This class is incharge of connecting to a database to create a person table,
- * to delete a person, update a person, add a person and to delete a person table
- * it will also return a list of persons in a users table.
- */
-
+ * This class is incharge of connecting to a database to access information from the
+ * users PERSONS table. This class will be able to delete a person, update a person, add 
+ * a person and it will also return a list of persons in the PERONS table.
+*/
 package edu.acc.capstone.addressbookDBA;
 
 import java.sql.*;
@@ -24,37 +23,25 @@ public class PersonDBA {
     private String connectionURL = "jdbc:derby://localhost:1527/addressbookv2";
     private Connection conn;
     
+    // PersonDBA constructor
     public PersonDBA() {}
-   //creates a table for a user persons
-    public void createPersonDBA( User user) {
-
-        try {
-            Class.forName( driver);
-            Connection conn = DriverManager.getConnection(connectionURL, "leo", "leo");
-            String sql = "CREATE TABLE " + user.getUserName() + " (FIRSTNAME varchar(50), LASTNAME varchar(50), ADDRESS varchar(100), EMAILADDRESS varchar(50), PHONENUMBER varchar(20), BIRTHDAY varchar(50), NOTES varchar(255))";
-            Statement st = conn.createStatement(); 
-            st.executeUpdate( sql );             
-            st.close(); 
-            } catch ( ClassNotFoundException cnfe ) { 
-            } catch (SQLException ex) { }  
-         if ( conn != null )
-            try { conn.close(); } catch ( SQLException sqle ) {} 
-    }
-    //adds a person to the table
+  
+    //adds a person to the PERSONS table
     public void addPersonDBA( User user, Person person ) {
         
         try {
             Class.forName( driver);
             Connection conn = DriverManager.getConnection(connectionURL, "leo", "leo");
-            String sql = "INSERT INTO LEO." + user.getUserName()+ " VALUES(?, ?, ?, ?, ?, ?, ? )";
+            String sql = "INSERT INTO LEO.PERSONS VALUES( ?, ?, ?, ?, ?, ?, ?, ? )";
             PreparedStatement st = conn.prepareStatement( sql );
-            st.setString(1, person.getFirstName());
-	    st.setString(2, person.getLastName());
-            st.setString(3, person.getAddress());
-            st.setString(4, person.getEmailAddress());
-	    st.setString(5, person.getPhoneNumber());
-            st.setString(6, person.getBirthday());
-            st.setString(7, person.getNotes());  
+            st.setString( 1, user.getUserName() );
+            st.setString( 2, person.getFirstName() );
+	    st.setString( 3, person.getLastName() );
+            st.setString( 4, person.getAddress() );
+            st.setString( 5, person.getEmailAddress() );
+	    st.setString( 6, person.getPhoneNumber() );
+            st.setString( 7, person.getBirthday() );
+            st.setString( 8, person.getNotes() );  
             st.executeUpdate();
             st.close(); 
             } catch ( ClassNotFoundException cnfe ) { 
@@ -62,15 +49,16 @@ public class PersonDBA {
          if ( conn != null )
             try { conn.close(); } catch ( SQLException sqle ) {} 
     }
-   //deletes a person from the table
+   //deletes a person from the PERSONS table
    public void deletePersonDBA( User user, Person person) {
        
        try {
             Class.forName( driver);
             Connection conn = DriverManager.getConnection(connectionURL, "leo", "leo");
-            String sql = "DELETE FROM LEO." + user.getUserName() +" WHERE FIRSTNAME =?";
-            PreparedStatement st = conn.prepareStatement( sql ); 
-            st.setString(1, person.getFirstName());
+            String sql = "DELETE FROM LEO.PERSONS WHERE USERNAME=? AND FIRSTNAME =?";
+            PreparedStatement st = conn.prepareStatement( sql );
+            st.setString( 1, user.getUserName() );
+            st.setString( 2, person.getFirstName());
             st.executeUpdate(); 
             st.close(); 
             } catch ( ClassNotFoundException cnfe ) { 
@@ -78,21 +66,22 @@ public class PersonDBA {
          if ( conn != null )
             try { conn.close(); } catch ( SQLException sqle ) {} 
     }
-   //updates a person from the table
+   //updates a person from the PERSONS table
    public void updatePersonDBA( User user, Person person ) {
         try {
             Class.forName( driver);
             Connection conn = DriverManager.getConnection(connectionURL, "leo", "leo");
-            String sql = "UPDATE LEO." + user.getUserName() + " SET FIRSTNAME =?, LASTNAME =?, ADDRESS =?, EMAILADDRESS=?, PHONENUMBER=?, BIRTHDAY=?, NOTES=? WHERE FIRSTNAME=?";
+            String sql = "UPDATE LEO.PERSONS SET FIRSTNAME =?, LASTNAME =?, ADDRESS =?, EMAILADDRESS=?, PHONENUMBER=?, BIRTHDAY=?, NOTES=? WHERE USERNAME=? AND FIRSTNAME=?";
             PreparedStatement st = conn.prepareStatement( sql ); 
-            st.setString(1, person.getFirstName());
-            st.setString(2, person.getLastName());
-            st.setString(3, person.getAddress());
-            st.setString(4, person.getEmailAddress());
-            st.setString(5, person.getPhoneNumber());
-            st.setString(6, person.getBirthday());
-            st.setString(7, person.getNotes());
-            st.setString(8, person.getFirstName());
+            st.setString( 1, person.getFirstName() );
+            st.setString( 2, person.getLastName() );
+            st.setString( 3, person.getAddress() );
+            st.setString( 4, person.getEmailAddress() );
+            st.setString( 5, person.getPhoneNumber() );
+            st.setString( 6, person.getBirthday() );
+            st.setString( 7, person.getNotes() );
+            st.setString( 8, user.getUserName() ); 
+            st.setString( 9, person.getFirstName() );
             st.executeUpdate(); 
             st.close(); 
             } catch ( ClassNotFoundException cnfe ) { 
@@ -100,32 +89,34 @@ public class PersonDBA {
          if ( conn != null )
             try { conn.close(); } catch ( SQLException sqle ) {} 
     }
-   //deletes a users person table
-   public void deletePersonTableDBA( User user) {
+   //deletes all rows of a user from the PERSONS table
+   public void deleteUserPersonsDBA( User user) {
        try {
             Class.forName( driver);
             Connection conn = DriverManager.getConnection(connectionURL, "leo", "leo");
-            String sql = "DROP TABLE LEO." + user.getUserName();
-            Statement st = conn.createStatement(); 
-            st.executeUpdate( sql );
-            st.close(); 
+            String sql = "DELETE FROM LEO.PERSONS WHERE USERNAME=?";
+            PreparedStatement st = conn.prepareStatement( sql );
+            st.setString( 1, user.getUserName() );
+            st.executeUpdate(); 
+            st.close();  
             } catch ( ClassNotFoundException cnfe ) { 
             } catch (SQLException ex) { }  
          if ( conn != null )
             try { conn.close(); } catch ( SQLException sqle ) {} 
    }
-   //returns a list of the persons in the users person table
+   //returns a list of the persons from the users PERSONS table
    public ArrayList<Person> getPersonListDBA( User user ) {
         ArrayList<Person> personList = new ArrayList<>();
         try {
             Class.forName( driver);
             Connection conn = DriverManager.getConnection(connectionURL, "leo", "leo");
-            String sql = "SELECT * FROM LEO." + user.getUserName();
-            Statement st = conn.createStatement(); 
-            ResultSet rs = null; 
-            rs = st.executeQuery( sql ); 
+            String sql = "SELECT * FROM LEO.PERSONS WHERE USERNAME=?";
+            PreparedStatement st = conn.prepareStatement( sql );
+            st.setString( 1, user.getUserName() );
+            ResultSet rs = st.executeQuery(); 
             while( rs.next() ){ 
-                personList.add( makePersonBean( rs.getString( "FIRSTNAME" ), rs.getString( "LASTNAME" ), rs.getString( "ADDRESS" ), rs.getString( "EMAILADDRESS" ), rs.getString( "PHONENUMBER" ), rs.getString( "BIRTHDAY" ), rs.getString( "NOTES")));
+                personList.add( makePersonBean( rs.getString( "USERNAME"), rs.getString( "FIRSTNAME" ), rs.getString( "LASTNAME" ), rs.getString( "ADDRESS" ), rs.getString( "EMAILADDRESS" ), rs.getString( "PHONENUMBER" ), rs.getString( "BIRTHDAY" ), rs.getString( "NOTES")));
+                //personList.add( makePersonBean( rs.getString( "FIRSTNAME" ), rs.getString( "LASTNAME" ), rs.getString( "ADDRESS" ), rs.getString( "EMAILADDRESS" ), rs.getString( "PHONENUMBER" ), rs.getString( "BIRTHDAY" ), rs.getString( "NOTES")));
             } 
             rs.close(); 
             st.close(); 
@@ -138,7 +129,7 @@ public class PersonDBA {
        
     }
    //makes a person bean to add to a array list of persons
-   private Person makePersonBean( String firstName, String lastName, String address, String emailAddress, String phoneNumber, String birthday, String notes  ) {
+   private Person makePersonBean( String userName, String firstName, String lastName, String address, String emailAddress, String phoneNumber, String birthday, String notes  ) {
        Person person = new Person();
        person.setFirstName( firstName );
        person.setLastName( lastName );

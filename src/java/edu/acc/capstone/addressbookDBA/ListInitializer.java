@@ -59,7 +59,9 @@ public class ListInitializer implements ServletContextListener {
     }
     //deteletes a user from the database
     public ListUsers deleteUserDBA( User user) { 
-        new PersonDBA().deletePersonTableDBA( user );
+        //deletes all the rows of this user from the PERSONS table
+          new PersonDBA().deleteUserPersonsDBA( user );
+        //deletes a user from the USERS table
         try {
             Class.forName( driver);
             Connection conn = DriverManager.getConnection(connectionURL, "leo", "leo");
@@ -84,7 +86,7 @@ public class ListInitializer implements ServletContextListener {
          
          return listOfUsers;
     }
-    //adds a user to the database
+    //adds a user to USERS table in the database
     public ListUsers AddUserDBA( User user ) {
         try {
             Class.forName( driver);
@@ -115,7 +117,7 @@ public class ListInitializer implements ServletContextListener {
          
          return listOfUsers;
     }
-    //returns a current list of users
+    //returns a current list of users from the USERS table
     public ListUsers getListOfUsers() {
        
         try {
